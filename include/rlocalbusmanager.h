@@ -12,7 +12,29 @@ typedef struct rPubSubTopicRecord_s {
         pthread_mutex_t subscriberDbLock; //per topic mutex which helps to add/remove topic to topic record Db
         rPubSubTopicDb_t *topicList;
 }rPubSubTopicRecord_t;
-
+/*
+MAX_TOPIC
+ |========|
+0|lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+ |lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+ |lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+ |lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+ |lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+ |        |
+ |        |
+ |        |
+ |        |
+ |========|
+ |lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+n|lock, * |->|TOPIC|->|TOPIC|->|TOPIC|->
+ |========|
+*/
 extern rPubSubTopicRecord_t      rPubSubTopicRecord[MAX_TOPIC];
 
 
@@ -33,5 +55,28 @@ typedef struct rPubSubSubscriberRecord_s {
         rPubSubSubscriberDb_t *list;
 }rPubSubTopicRecord_t;
 
+/*
+MAX_TOPIC
+ |========|
+0|lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+ |lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+ |lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+ |lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+ |lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+ |        |
+ |        |
+ |        |
+ |        |
+ |========|
+ |lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+n|lock, * |->|SUBSCRIBER|->|SUBSCRIBER|->|SUBSCRIBER|->
+ |========|
+*/
 rPubSubSubscriberRecord_t rPubSubSubscriberRecord[MAX_TOPIC];
 
